@@ -69,7 +69,7 @@ except NameError:
 
 
 _USAGE = """
-Syntax: cpplint.py [--verbose=#] [--output=emacs|eclipse|vs7|junit]
+Syntax: cpplint.py [--verbose=#] [--output=emacs|eclipse|vs7|junit|sed|gsed]
                    [--filter=-x,+y,...]
                    [--counting=total|toplevel|detailed] [--root=subdir]
                    [--repository=path]
@@ -103,11 +103,16 @@ Syntax: cpplint.py [--verbose=#] [--output=emacs|eclipse|vs7|junit]
 
   Flags:
 
-    output=emacs|eclipse|vs7|junit
+    output=emacs|eclipse|vs7|junit|sed|gsed
       By default, the output is formatted to ease emacs parsing.  Visual Studio
       compatible output (vs7) may also be used.  Further support exists for
       eclipse (eclipse), and JUnit (junit). XML parsers such as those used
-      in Jenkins and Bamboo may also be used.  Other formats are unsupported.
+      in Jenkins and Bamboo may also be used.
+      The sed format outputs sed commands that should fix some of the errors.
+      Note that this requires gnu sed. If that is installed as gsed on your
+      system (common e.g. on macOS with homebrew) you can use the gsed output
+      format. Sed commands are written to stdout, not stderr, so you should be
+      able to pipe output straight to a shell to run the fixes.
 
     verbose=#
       Specify a number 0-5 to restrict errors to certain verbosity levels.
@@ -813,6 +818,22 @@ _SEARCH_C_FILE = re.compile(r'\b(?:LINT_C_FILE|'
 # Match string that indicates we're working on a Linux Kernel file.
 _SEARCH_KERNEL_FILE = re.compile(r'\b(?:LINT_KERNEL_FILE)')
 
+# Commands for sed to fix the problem
+_SED_FIXUPS = {
+  "Remove spaces around =": "s/ = /=/",
+  "Remove spaces around !=": "s/ != /!=/",
+  "Remove space before ( in if (": "s/if (/if(/",
+  "Remove space before ( in for (": "s/for (/for(/",
+  "Remove space before ( in while (": "s/while (/while(/",
+  "Remove space before ( in switch (": "s/switch (/switch(/",
+  "Should have a space between // and comment": 's/\/\//\/\/ /',
+  "Missing space before {": r's/\([^ ]\){/\1 {/',
+  "Tab found, replace by spaces": r's/\t/  /g',
+  "Line ends in whitespace.  Consider deleting these extra spaces.": r's/\s*$//',
+  "You don't need a ; after a }": r's/};/}/',
+  "Missing space after ,": r's/,\([^ ]\)/, \1/g',
+}
+
 _regexp_compile_cache = {}
 
 # {str, set(int)}: a map from error categories to sets of linenumbers
@@ -1232,6 +1253,8 @@ class _CppLintState(object):
     # "eclipse" - format that eclipse can parse
     # "vs7" - format that Microsoft Visual Studio 7 can parse
     # "junit" - format that Jenkins, Bamboo, etc can parse
+    # "sed" - returns a gnu sed command to fix the problem
+    # "gsed" - like sed, but names the command gsed, e.g. for macOS homebrew users
     self.output_format = 'emacs'
 
     # For JUnit output, save errors and failures until the end so that they
@@ -1680,6 +1703,13 @@ def Error(filename, linenum, category, confidence, message):
     elif _cpplint_state.output_format == 'junit':
       _cpplint_state.AddJUnitFailure(filename, linenum, message, category,
           confidence)
+    elif _cpplint_state.output_format in ['sed', 'gsed']:
+      if message in _SED_FIXUPS:
+        sys.stdout.write(_cpplint_state.output_format + " -i '%s%s' %s # %s  [%s] [%d]\n" % (
+            linenum, _SED_FIXUPS[message], filename, message, category, confidence))
+      else:
+        sys.stderr.write('# %s:%s:  "%s"  [%s] [%d]\n' % (
+            filename, linenum, message, category, confidence))
     else:
       final_message = '%s:%s:  %s  [%s] [%d]\n' % (
           filename, linenum, message, category, confidence)
