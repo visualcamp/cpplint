@@ -2337,7 +2337,8 @@ def GetHeaderGuardCPPVariable(filename):
 
     #   --root=.. , will prepend the outer directory to the header guard
     full_path = fileinfo.FullName()
-    root_abspath = os.path.abspath(_root)
+    # adapt slashes for windows
+    root_abspath = os.path.abspath(_root).replace('\\', '/')
 
     maybe_path = StripListPrefix(PathSplitToList(full_path),
                                  PathSplitToList(root_abspath))
