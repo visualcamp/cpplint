@@ -1573,8 +1573,10 @@ class FileInfo(object):
       # searching up from the current path.
       root_dir = current_dir = os.path.dirname(fullname)
       while current_dir != os.path.dirname(current_dir):
-        if (os.path.exists(os.path.join(current_dir, ".git")) or
-            os.path.exists(os.path.join(current_dir, ".hg")) or
+        if os.path.exists(os.path.join(current_dir, ".git")):
+          root_dir = current_dir
+          break  # stop here, we might be in a submodule
+        if (os.path.exists(os.path.join(current_dir, ".hg")) or
             os.path.exists(os.path.join(current_dir, ".svn"))):
           root_dir = current_dir
         current_dir = os.path.dirname(current_dir)
