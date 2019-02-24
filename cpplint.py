@@ -821,18 +821,18 @@ _SEARCH_KERNEL_FILE = re.compile(r'\b(?:LINT_KERNEL_FILE)')
 
 # Commands for sed to fix the problem
 _SED_FIXUPS = {
-  "Remove spaces around =": "s/ = /=/",
-  "Remove spaces around !=": "s/ != /!=/",
-  "Remove space before ( in if (": "s/if (/if(/",
-  "Remove space before ( in for (": "s/for (/for(/",
-  "Remove space before ( in while (": "s/while (/while(/",
-  "Remove space before ( in switch (": "s/switch (/switch(/",
-  "Should have a space between // and comment": 's/\/\//\/\/ /',
-  "Missing space before {": r's/\([^ ]\){/\1 {/',
-  "Tab found, replace by spaces": r's/\t/  /g',
-  "Line ends in whitespace.  Consider deleting these extra spaces.": r's/\s*$//',
-  "You don't need a ; after a }": r's/};/}/',
-  "Missing space after ,": r's/,\([^ ]\)/, \1/g',
+  'Remove spaces around =': r's/ = /=/',
+  'Remove spaces around !=': r's/ != /!=/',
+  'Remove space before ( in if (': r's/if (/if(/',
+  'Remove space before ( in for (': r's/for (/for(/',
+  'Remove space before ( in while (': r's/while (/while(/',
+  'Remove space before ( in switch (': r's/switch (/switch(/',
+  'Should have a space between // and comment': r's/\/\//\/\/ /',
+  'Missing space before {': r's/\([^ ]\){/\1 {/',
+  'Tab found, replace by spaces': r's/\t/  /g',
+  'Line ends in whitespace.  Consider deleting these extra spaces.': r's/\s*$//',
+  'You don\'t need a ; after a }': r's/};/}/',
+  'Missing space after ,': r's/,\([^ ]\)/, \1/g',
 }
 
 _regexp_compile_cache = {}
