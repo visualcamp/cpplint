@@ -5989,6 +5989,26 @@ class NestingStateTest(unittest.TestCase):
     self.UpdateWithLines(['}', '}}'])
     self.assertEquals(len(self.nesting_state.stack), 0)
 
+  def testDecoratedClass(self):
+    self.UpdateWithLines(['class Decorated_123 API A {'])
+    self.assertEquals(len(self.nesting_state.stack), 1)
+    self.assertTrue(isinstance(self.nesting_state.stack[0], cpplint._ClassInfo))
+    self.assertEquals(self.nesting_state.stack[0].name, 'A')
+    self.assertFalse(self.nesting_state.stack[0].is_derived)
+    self.assertEquals(self.nesting_state.stack[0].class_indent, 0)
+    self.UpdateWithLines(['}'])
+    self.assertEquals(len(self.nesting_state.stack), 0)
+
+  def testInnerClass(self):
+    self.UpdateWithLines(['class A::B::C {'])
+    self.assertEquals(len(self.nesting_state.stack), 1)
+    self.assertTrue(isinstance(self.nesting_state.stack[0], cpplint._ClassInfo))
+    self.assertEquals(self.nesting_state.stack[0].name, 'A::B::C')
+    self.assertFalse(self.nesting_state.stack[0].is_derived)
+    self.assertEquals(self.nesting_state.stack[0].class_indent, 0)
+    self.UpdateWithLines(['}'])
+    self.assertEquals(len(self.nesting_state.stack), 0)
+    
   def testClass(self):
     self.UpdateWithLines(['class A {'])
     self.assertEquals(len(self.nesting_state.stack), 1)

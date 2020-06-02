@@ -168,6 +168,8 @@ class NoRepoSignatureTests(TemporaryFolderClassSetup, unittest.TestCase):
     def testCodeliteSample(self):
         self.checkAllInFolder('./samples/codelite-sample', 1)
 
+    def testV8Sample(self):
+        self.checkAllInFolder('./samples/v8-sample', 1)
 
 class GitRepoSignatureTests(TemporaryFolderClassSetup, unittest.TestCase):
     """runs in a temporary folder with .git file"""
