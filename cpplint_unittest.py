@@ -5351,6 +5351,14 @@ class OrderOfIncludesTest(CpplintTestBase):
                      classify_include(file_info('foo/foo.cc'),
                                       'sys/time.h',
                                       True))
+    self.assertEqual(cpplint._C_SYS_HEADER,
+                     classify_include(file_info('foo/foo.cc'),
+                                      'netipx/ipx.h',
+                                      True))
+    self.assertEqual(cpplint._C_SYS_HEADER,
+                     classify_include(file_info('foo/foo.cc'),
+                                      'arpa/ftp.h',
+                                      True))
     self.assertEqual(cpplint._CPP_SYS_HEADER,
                      classify_include(file_info('foo/foo.cc'),
                                       'string',
