@@ -5367,10 +5367,15 @@ class OrderOfIncludesTest(CpplintTestBase):
                      classify_include(file_info('foo/foo.cc'),
                                       'typeinfo',
                                       True))
-    self.assertEqual(cpplint._OTHER_SYS_HEADER,
+    self.assertEqual(cpplint._C_SYS_HEADER,
                      classify_include(file_info('foo/foo.cc'),
                                       'foo/foo.h',
                                       True))
+    self.assertEqual(cpplint._OTHER_SYS_HEADER,
+                     classify_include(file_info('foo/foo.cc'),
+                                      'foo/foo.h',
+                                      True,
+                                      "standardcfirst"))
     self.assertEqual(cpplint._OTHER_HEADER,
                      classify_include(file_info('foo/foo.cc'),
                                       'string',
