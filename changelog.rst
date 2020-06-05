@@ -1,5 +1,13 @@
 Changelog
----------
+=========
+
+1.5.1
+-----
+
+* Revert #43 behavior change for include order from 1.5.0, and hide it behind command-line-flag `--includeorder=standardcfirst`.
+  It turns out there is no easy objective way to tell c system headers from certain c++ library headers, and Google cpplint intentionally classifies some C++ header includes as C system header for simplicity.
+* Libraries considered as C system headers using --includeorder=standardcfirst now also includes linux-specifc headers (glibc-devel, glibc-kernheaders, linux-libc-dev).
+
 
 1.5.0
 -----

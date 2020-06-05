@@ -77,6 +77,7 @@ To release a new version:
     git commit -m "Releasing x.y.z"
     # test-release (on env by mkvirtualenv -p /usr/bin/python3)
     pip install --upgrade setuptools wheel twine
+    rm -rf dist
     python3 setup.py sdist bdist_wheel
     twine upload --repository testpypi dist/*
     # ... Check website and downloads from https://test.pypi.org/project/cpplint/

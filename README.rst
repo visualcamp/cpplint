@@ -68,7 +68,7 @@ The modifications in this fork are minor fixes and cosmetic changes, such as:
 * JUnit XML output format
 * Overriding repository root auto-detection via --repository
 * Support ``#pragma once`` as an alternative to header include guards
-* ... and a few more
+* ... and a few more (most of which are open PRs on upstream)
 
 
 Acknowledgements
