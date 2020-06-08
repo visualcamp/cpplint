@@ -2437,16 +2437,22 @@ def CheckHeaderFileIncluded(filename, include_state, error):
       continue
     headername = FileInfo(headerfile).RepositoryName()
     first_include = None
+    include_uses_unix_dir_aliases = False
     for section_list in include_state.include_list:
       for f in section_list:
-        if headername in f[0] or f[0] in headername:
+        include_text = f[0]
+        if "./" in include_text:
+          include_uses_unix_dir_aliases = True
+        if headername in include_text or include_text in headername:
           return
         if not first_include:
           first_include = f[1]
 
-    error(filename, first_include, 'build/include', 5,
-          '%s should include its header file %s' % (fileinfo.RepositoryName(),
-                                                    headername))
+    message = '%s should include its header file %s' % (fileinfo.RepositoryName(), headername)
+    if include_uses_unix_dir_aliases:
+      message += ". Unix directory aliases like '.' and '..' are not allowed."
+
+    error(filename, first_include, 'build/include', 5, message)
 
 
 def CheckForBadCharacters(filename, lines, error):

@@ -4812,6 +4812,23 @@ class CpplintTest(CpplintTestBase):
         0,
         error_collector.Results().count(expected))
 
+      # Unix directory aliases are not allowed, and should trigger the
+      # "include itse header file" error
+      error_collector = ErrorCollector(self.assertTrue)
+      cpplint.ProcessFileData(
+        'test/foo.cc', 'cc',
+        [r'#include "./test/foo.h"',
+         ''
+         ],
+        error_collector)
+      expected = "{dir}/{fn}.cc should include its header file {dir}/{fn}{unix_text}  [build/include] [5]".format(
+          fn="foo",
+          dir=test_directory,
+          unix_text=". Unix directory aliases like '.' and '..' are not allowed.")
+      self.assertEqual(
+        1,
+        error_collector.Results().count(expected))
+
       # This should continue to work
       error_collector = ErrorCollector(self.assertTrue)
       cpplint.ProcessFileData(
