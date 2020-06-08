@@ -4824,7 +4824,7 @@ class CpplintTest(CpplintTestBase):
       expected = "{dir}/{fn}.cc should include its header file {dir}/{fn}{unix_text}  [build/include] [5]".format(
           fn="foo",
           dir=test_directory,
-          unix_text=". Unix directory aliases like '.' and '..' are not allowed.")
+          unix_text=". Unix directory aliases like . and .. are not allowed.")
       self.assertEqual(
         1,
         error_collector.Results().count(expected))
