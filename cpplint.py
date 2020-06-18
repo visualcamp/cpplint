@@ -2450,7 +2450,7 @@ def CheckHeaderFileIncluded(filename, include_state, error):
 
     message = '%s should include its header file %s' % (fileinfo.RepositoryName(), headername)
     if include_uses_unix_dir_aliases:
-      message += ". Unix directory aliases like . and .. are not allowed."
+      message += ". Relative paths like . and .. are not allowed."
 
     error(filename, first_include, 'build/include', 5, message)
 
