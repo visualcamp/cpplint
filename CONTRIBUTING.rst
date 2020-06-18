@@ -6,7 +6,7 @@ Thanks for your interest in contributing to cpplint.
 Any kinds of contributions are welcome: Bug reports, Documentation, Patches.
 
 However cpplint is a bit special as a project because it aims to closely follow what Google does in the upstream repository.
-That means Google remains the source of all major requirements and functinoality of cpplint, where as this fork adds extensions to cpplint run on more environments and in more companies.
+That means Google remains the source of all major requirements and functionality of cpplint, where as this fork adds extensions to cpplint run on more environments and in more companies.
 The difference between this cpplint and Google should remain so small that anyone can at a glance see there is no added change that could be regarded as a security vulnerability.
 
 Here are some tips to make best use of your time:
@@ -61,7 +61,7 @@ You can setup your local environment for developing patches for cpplint like thi
     ./setup.py lint
     ./setup.py style
     ./setup.py ci # all the above
-    ./tox    # all of the above in all python environments
+    tox    # all of the above in all python environments
 
 Releasing
 ---------
