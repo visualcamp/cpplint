@@ -4821,7 +4821,7 @@ class CpplintTest(CpplintTestBase):
          ''
          ],
         error_collector)
-      expected = "{dir}/{fn}.cc should include its header file {dir}/{fn}{unix_text}  [build/include] [5]".format(
+      expected = "{dir}/{fn}.cc should include its header file {dir}/{fn}.h{unix_text}  [build/include] [5]".format(
           fn="foo",
           dir=test_directory,
           unix_text=". Relative paths like . and .. are not allowed.")
