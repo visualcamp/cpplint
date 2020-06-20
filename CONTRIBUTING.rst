@@ -29,7 +29,7 @@ Non-Goals:
 Development
 -----------
 
-For many tasks, it is okay to just develop using a single installed python version. But if you need to test/debug the project in multiple python versions, you need to install those version::
+For many tasks, it is okay to just develop using a single installed python version. But if you need to test/debug the project in multiple python versions, you need to install those versions::
 
 1. (Optional) Install multiple python versions
 
@@ -106,10 +106,19 @@ To incorporate google's changes:
 .. code-block:: bash
 
     git fetch google gh-pages
+
+    ## Merge workflow (clean, no new commits)
+    git checkout master -b updates
+    git merge google/gh-pages # this will have a lot of conflicts
+    # ... solve conflicts
+    git merge -- continue
+    
+    ## Rebase workflow (dirty, creates new commits)
     git checkout -b updates FETCH_HEAD
     git rebase master # this will have a lot of conflicts, most of which can be solved with the next command (run repeatedly)
     # solve conflicts with files deleted in our fork (this is idempotent and safe to be called. when cpplint.py has conflicts, it will do nothing)
-    git status | grep 'new file:' | awk '{print $3}' | xargs -r git rm --cached ; git status | grep 'deleted by us' | awk '{print $4}' | xargs -r git rm ; git status --untracked-files=no | grep 'nothing to commit' && git rebase --skip
+    git status | grep 'new file:' | awk '{print $3}' | xargs -r git rm --cached ; git status | grep 'deleted by us' | awk '{print $4}' | xargs -r git rm
+    git status --untracked-files=no | grep 'nothing to commit' && git rebase --skip
 
     git push -u origin updates
     # check travis
