@@ -6769,6 +6769,7 @@ def ParseArguments(args):
   _SetFilters(filters)
   _SetCountingStyle(counting_style)
 
+  filenames.sort()
   return filenames
 
 def _ExpandDirectories(filenames):
