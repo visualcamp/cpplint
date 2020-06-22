@@ -48,7 +48,8 @@ It may be okay to run and test python against locally installed libraries, but i
 
 Alternatively you can locally install patches like this::
 
-    pip install --user -e .[dev]
+    pip install -e .[dev]
+    # for usage without virtualenv, add --user
 
 You can setup your local environment for developing patches for cpplint like this:
 
