@@ -6,3 +6,4 @@ pytest-cov
 pyparsing<3
 zipp<=0.5.1
 configparser<=3.7.4
+testfixtures

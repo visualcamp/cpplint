@@ -37,6 +37,7 @@ import subprocess
 import unittest
 import shutil
 import tempfile
+from testfixtures import compare
 
 BASE_CMD = sys.executable + ' ' + os.path.abspath('./cpplint.py ')
 
@@ -73,8 +74,9 @@ class TemporaryFolderClassSetup(object):
     Regression tests: The test starts a filetreewalker scanning for files name *.def
     Such files are expected to have as first line the argument
     to a cpplint invocation from within the same directory, as second line the
-    expected status code, and all other lines the expected systemerr output (two blank
-    lines at end).
+    expected status code, then the line count of stdout lines,
+    then the stdout lines, and all other lines the expected
+    systemerr output (two blank lines at end).
     """
 
     @classmethod
@@ -123,25 +125,30 @@ class TemporaryFolderClassSetup(object):
         with open(path, 'rb') as filehandle:
             datalines = filehandle.readlines()
             stdoutLines = int(datalines[2])
-            self._runAndCheck(os.path.dirname(path),
-                             datalines[0].decode('utf8').strip(),
-                             int(datalines[1]),
-                             [line.decode('utf8').strip() for line in datalines[3:3 + stdoutLines]],
-                             [line.decode('utf8').strip() for line in datalines[3 + stdoutLines:]])
+            self._runAndCheck(path,
+                              datalines[0].decode('utf8').strip(),
+                              int(datalines[1]),
+                              [line.decode('utf8').strip() for line in datalines[3:3 + stdoutLines]],
+                              [line.decode('utf8').strip() for line in datalines[3 + stdoutLines:]])
 
-    def _runAndCheck(self, rel_cwd, args, expectedStatus, expectedOut, expectedErr):
+    def _runAndCheck(
+            self,
+            definition_file,
+            args,
+            expected_status,
+            expected_out,
+            expected_err
+    ):
+        rel_cwd = os.path.dirname(definition_file)
         cmd = BASE_CMD + self.get_extra_command_args(rel_cwd) + args
         cwd = os.path.join(self._root, rel_cwd)
         # command to reproduce, do not forget first two lines have special meaning
         print("\ncd " + cwd + " && " + cmd + " 2> <filename>")
         (status, out, err) = RunShellCommand(cmd, cwd)
-        try:
-            self.assertEqual(expectedStatus, status, 'bad command status %s' % status)
-            self.assertEqual(expectedErr, err.decode('utf8').split('\n'))
-            self.assertEqual(expectedOut, out.decode('utf8').split('\n'))
-        except AssertionError as e:
-            e.args += ('Failed check in %s for command: %s' % (cwd, cmd),)
-            raise e
+        self.assertEqual(expected_status, status, 'bad command status %s' % status)
+        prefix = 'Failed check in %s comparing to %s for command: %s' % (cwd, definition_file, cmd)
+        compare('\n'.join(expected_err), err.decode('utf8'), prefix=prefix, show_whitespace=True)
+        compare('\n'.join(expected_out), out.decode('utf8'), prefix=prefix, show_whitespace=True)
 
 
 class NoRepoSignatureTests(TemporaryFolderClassSetup, unittest.TestCase):
