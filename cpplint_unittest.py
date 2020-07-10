@@ -4134,7 +4134,7 @@ class CpplintTest(CpplintTestBase):
 
   def testRecursiveArgument(self):
     working_dir = os.getcwd()
-    temp_dir = tempfile.mkdtemp()
+    temp_dir = os.path.realpath(tempfile.mkdtemp())
     try:
       src_dir = os.path.join(temp_dir, "src")
       nested_dir = os.path.join(temp_dir, "src", "nested")
@@ -4154,7 +4154,7 @@ class CpplintTest(CpplintTestBase):
 
   def testRecursiveExcludeInvalidFileExtension(self):
     working_dir = os.getcwd()
-    temp_dir = tempfile.mkdtemp()
+    temp_dir = os.path.realpath(tempfile.mkdtemp())
     try:
       src_dir = os.path.join(temp_dir, "src")
       os.makedirs(src_dir)
@@ -4175,7 +4175,7 @@ class CpplintTest(CpplintTestBase):
 
   def testRecursiveExclude(self):
     working_dir = os.getcwd()
-    temp_dir = tempfile.mkdtemp()
+    temp_dir = os.path.realpath(tempfile.mkdtemp())
     try:
       src_dir = os.path.join(temp_dir, 'src')
       src2_dir = os.path.join(temp_dir, 'src2')
@@ -4688,7 +4688,7 @@ class CpplintTest(CpplintTestBase):
     self.assertEquals([], error_collector.ResultList())
 
   def testBuildHeaderGuardWithRoot(self):
-    temp_directory = tempfile.mkdtemp()
+    temp_directory = os.path.realpath(tempfile.mkdtemp())
     try:
       test_directory = os.path.join(temp_directory, "test")
       os.makedirs(test_directory)
@@ -4794,7 +4794,7 @@ class CpplintTest(CpplintTestBase):
     os.chdir(cur_dir)
 
   def testIncludeItsHeader(self):
-    temp_directory = tempfile.mkdtemp()
+    temp_directory = os.path.realpath(tempfile.mkdtemp())
     cur_dir = os.getcwd()
     try:
       test_directory = os.path.join(temp_directory, "test")
@@ -4895,8 +4895,8 @@ class CpplintTest(CpplintTestBase):
                       cpplint.PathSplitToList(os.path.join('a', 'b', 'c', 'd')))
 
   def testBuildHeaderGuardWithRepository(self):
-    temp_directory = tempfile.mkdtemp()
-    temp_directory2 = tempfile.mkdtemp()
+    temp_directory = os.path.realpath(tempfile.mkdtemp())
+    temp_directory2 = os.path.realpath(tempfile.mkdtemp())
     try:
       os.makedirs(os.path.join(temp_directory, ".svn"))
       trunk_dir = os.path.join(temp_directory, "trunk")
@@ -6413,7 +6413,7 @@ class NestingStateTest(unittest.TestCase):
 class QuietTest(unittest.TestCase):
 
   def setUp(self):
-    self.temp_dir = tempfile.mkdtemp()
+    self.temp_dir = os.path.realpath(tempfile.mkdtemp())
     self.this_dir_path = os.path.abspath(self.temp_dir)
     self.python_executable = sys.executable or 'python'
     self.cpplint_test_h = os.path.join(self.this_dir_path,

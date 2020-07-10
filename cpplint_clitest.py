@@ -83,7 +83,7 @@ class TemporaryFolderClassSetup(object):
     def setUpClass(cls):
         """setup tmp folder for testing with samples and custom additions by subclasses"""
         try:
-            cls._root = tempfile.mkdtemp()
+            cls._root = os.path.realpath(tempfile.mkdtemp())
             shutil.copytree('samples', os.path.join(cls._root, 'samples'))
             cls.prepare_directory(cls._root)
         except Exception as e:
