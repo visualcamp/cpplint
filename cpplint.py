@@ -6744,9 +6744,9 @@ def ParseArguments(args):
     if opt == '--version':
       PrintVersion()
     elif opt == '--output':
-      if val not in ('emacs', 'vs7', 'eclipse', 'junit'):
+      if val not in ('emacs', 'vs7', 'eclipse', 'junit', 'sed', 'gsed'):
         PrintUsage('The only allowed output formats are emacs, vs7, eclipse '
-                   'and junit.')
+                   'sed, gsed and junit.')
       output_format = val
     elif opt == '--quiet':
       quiet = True
