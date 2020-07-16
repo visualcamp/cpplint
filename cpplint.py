@@ -354,6 +354,13 @@ _ERROR_CATEGORIES = [
     'whitespace/todo',
     ]
 
+# keywords to use with --outputs which generate stdout for machine processing
+_MACHINE_OUTPUTS = [
+  'junit',
+  'sed',
+  'gsed'
+]
+
 # These error categories are no longer enforced by cpplint, but for backwards-
 # compatibility they may still appear in NOLINT comments.
 _LEGACY_ERROR_CATEGORIES = [
@@ -1345,7 +1352,8 @@ class _CppLintState(object):
 
   def PrintInfo(self, message):
     # _quiet does not represent --quiet flag.
-    if not _quiet and self.output_format != 'junit':
+    # Hide infos from stdout to keep stdout pure for machine consumption
+    if not _quiet and self.output_format not in _MACHINE_OUTPUTS:
       sys.stdout.write(message)
 
   def PrintError(self, message):
