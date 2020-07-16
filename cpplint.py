@@ -854,7 +854,7 @@ _repository = None
 # Files to exclude from linting. This is set by the --exclude flag.
 _excludes = None
 
-# Whether to supress PrintInfo messages
+# Whether to supress all PrintInfo messages, UNRELATED to --quiet flag
 _quiet = False
 
 # The allowed line length of files.
@@ -1344,6 +1344,7 @@ class _CppLintState(object):
       self.PrintInfo('Total errors found: %d\n' % self.error_count)
 
   def PrintInfo(self, message):
+    # _quiet does not represent --quiet flag.
     if not _quiet and self.output_format != 'junit':
       sys.stdout.write(message)
 

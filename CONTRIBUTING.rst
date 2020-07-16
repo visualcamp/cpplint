@@ -56,7 +56,9 @@ You can setup your local environment for developing patches for cpplint like thi
 .. code-block:: bash
 
     # run a single test
-    pytest cpplint_unittest.py -k testExclude
+    pytest --no-cov cpplint_unittest.py -k testExclude
+    # run a single CLI integration test
+    pytest --no-cov cpplint_clitest.py -k testSillySample
     # run all tests
     ./setup.py test
     ./setup.py lint
