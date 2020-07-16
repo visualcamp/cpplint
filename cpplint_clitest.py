@@ -164,7 +164,7 @@ class NoRepoSignatureTests(TemporaryFolderClassSetup, unittest.TestCase):
         self.checkAllInFolder('./samples/vlc-sample', 1)
 
     def testSillySample(self):
-        self.checkAllInFolder('./samples/silly-sample', 3)
+        self.checkAllInFolder('./samples/silly-sample', 4)
 
     def testBoostSample(self):
         self.checkAllInFolder('./samples/boost-sample', 4)
