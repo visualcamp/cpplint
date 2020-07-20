@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.5.3 (2020-07-20)
+-----
+
+* Fix #156: sed/gsed output parameter rejected
+* Fix #156: sed/gsed output without other stdout information
+* improvements to regression tests
+
 1.5.2 (2020-06-24)
 -----
 
