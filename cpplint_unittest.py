@@ -2705,6 +2705,14 @@ class CpplintTest(CpplintTestBase):
     self.TestLint('file_tocs_[i] = (FileToc) {a, b, c};', '')
     self.TestMultiLineLint('class X : public Y,\npublic Z {};', '')
 
+  def testSpacingBeforeBrackets(self):
+    self.TestLint('int numbers [] = { 1, 2, 3 };',
+                  'Extra space before [  [whitespace/braces] [5]')
+    # space allowed in some cases
+    self.TestLint('auto [abc, def] = func();', '')
+    self.TestLint('#define NODISCARD [[nodiscard]]', '')
+    self.TestLint('void foo(int param [[maybe_unused]]);', '')
+
   def testLambda(self):
     self.TestLint('auto x = []() {};', '')
     self.TestLint('return []() {};', '')
