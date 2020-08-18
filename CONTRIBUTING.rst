@@ -69,6 +69,8 @@ You can setup your local environment for developing patches for cpplint like thi
 Releasing
 ---------
 
+The release process first prepares the documentation, then publishes to testpypi to verify, then releases to real pypi. Testpypi acts like real pypi, so broken releases cannot be deleted. For a typical bugfixing release, no special issue on testpypi is expected (but it's still good practice).
+
 To release a new version:
 
 .. code-block:: bash
@@ -81,6 +83,7 @@ To release a new version:
     # test-release (on env by mkvirtualenv -p /usr/bin/python3)
     pip install --upgrade setuptools wheel twine
     rm -rf dist
+    # Test release, requires account on testpypi
     python3 setup.py sdist bdist_wheel
     twine upload --repository testpypi dist/*
     # ... Check website and downloads from https://test.pypi.org/project/cpplint/

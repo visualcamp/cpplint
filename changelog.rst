@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.5.4 (TBC)
-----
+1.5.4 (2020-08-18)
+-----
 
 * Fix google#166, Allow space before C++11 attributes
 
