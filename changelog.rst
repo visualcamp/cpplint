@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.5.5 (TBC)
+-----
+
+* Fix google#346: --root option not working on windows due to slashes in path
+
 1.5.4 (2020-08-18)
 -----
 
