@@ -90,14 +90,14 @@ To release a new version:
     # Actual release
     twine upload dist/*
     git tag x.y.z
-    git push
     git push --tags
 
+After releasing, it is be good practice to comment on github for closed tickets, to notify authors.
 
 Catching up with Upstream
 -------------------------
 
-For maintainers, it is a regular duty to look at what cpplint changes were merged upstream, to include them in this fork.
+For maintainers, it is a regular duty to look at what cpplint changes were merged upstream, to include them in this fork (though these updates happen once per year and less).
 
 Checkout here and upstream google:
 
