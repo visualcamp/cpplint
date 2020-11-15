@@ -2,6 +2,7 @@
 
 # also change in tox.ini
 flake8>=3.7.8
+flake8-polyfill
 pylint>=1.8.4
 tox>=3.0.0
 tox-pyenv
