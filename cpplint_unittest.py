@@ -4038,6 +4038,22 @@ class CpplintTest(CpplintTestBase):
               [] { if (true); });
         }""",
         '')
+    self.TestMultiLineLint(
+        """
+        #if(A == 0)
+          foo();
+        #elif(A == 1)
+          bar();
+        #endif""",
+        '')
+    self.TestMultiLineLint(
+        """
+        #if (A == 0)
+          foo();
+        #elif (A == 1)
+          bar();
+        #endif""",
+        '')
 
   def testTab(self):
     self.TestLint('\tint a;',
@@ -6097,7 +6113,7 @@ class NestingStateTest(unittest.TestCase):
     self.assertEquals(self.nesting_state.stack[0].class_indent, 0)
     self.UpdateWithLines(['}'])
     self.assertEquals(len(self.nesting_state.stack), 0)
-    
+
   def testClass(self):
     self.UpdateWithLines(['class A {'])
     self.assertEquals(len(self.nesting_state.stack), 1)
