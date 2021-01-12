@@ -6,6 +6,7 @@ flake8-polyfill
 pylint>=1.8.4
 tox>=3.0.0
 tox-pyenv
+importlib-metadata>=0.12
 
 # Below only run with python3, installed in tox.ini
 # mypy
