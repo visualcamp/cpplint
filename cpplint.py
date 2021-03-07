@@ -127,11 +127,11 @@ Syntax: cpplint.py [--verbose=#] [--output=emacs|eclipse|vs7|junit|sed|gsed]
       error messages whose category names pass the filters will be printed.
       (Category names are printed with the message and look like
       "[whitespace/indent]".)  Filters are evaluated left to right.
-      "-FOO" and "FOO" means "do not print categories that start with FOO".
+      "-FOO" means "do not print categories that start with FOO".
       "+FOO" means "do print categories that start with FOO".
 
       Examples: --filter=-whitespace,+whitespace/braces
-                --filter=whitespace,runtime/printf,+runtime/printf_format
+                --filter=-whitespace,-runtime/printf,+runtime/printf_format
                 --filter=-,+build/include_what_you_use
 
       To see a list of all the categories used in cpplint, pass no arg:
