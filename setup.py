@@ -73,7 +73,7 @@ setup(name='cpplint',
       long_description=open('README.rst').read(),
       license='BSD-3-Clause',
       setup_requires=[
-          "pytest-runner"
+          "pytest-runner==5.2"
       ],
       tests_require=test_required,
       # extras_require allow pip install .[dev]
